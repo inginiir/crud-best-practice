@@ -29,6 +29,6 @@ public class Drone {
     private Integer batteryCapacity;
     @Enumerated(EnumType.STRING)
     private State drone_state;
-    @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "drone", fetch = FetchType.EAGER)
     private List<Medication> items;
 }
