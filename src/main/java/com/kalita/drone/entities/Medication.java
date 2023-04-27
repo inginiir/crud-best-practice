@@ -12,6 +12,8 @@ import lombok.Setter;
 public class Medication {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_id_generator")
+    @SequenceGenerator(name = "medication_id_generator", sequenceName = "medication_id_generator", allocationSize = 1)
     private Long id;
     @Pattern(regexp = "^[a-zA-Z\\d-_]+$", message = "{medication.name.constraints}")
     private String medicationName;

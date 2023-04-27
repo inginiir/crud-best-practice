@@ -19,3 +19,6 @@ CREATE TABLE medications
     CONSTRAINT medication_pk PRIMARY KEY (id),
     CONSTRAINT medication_drone_fk FOREIGN KEY (drone_id) REFERENCES drones (id)
 );
+
+create sequence drone_id_generator start 1;
+create sequence medication_id_generator start 1;

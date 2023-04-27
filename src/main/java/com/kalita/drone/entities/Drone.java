@@ -16,6 +16,8 @@ import java.util.List;
 public class Drone {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "drone_id_generator")
+    @SequenceGenerator(name = "drone_id_generator", sequenceName = "drone_id_generator", allocationSize = 1)
     private Long id;
     @Size(max = 100, message = "{drone.serialnumber.length}")
     private String serialNumber;
