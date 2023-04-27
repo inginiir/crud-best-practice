@@ -1,4 +1,4 @@
-package com.kalita.test;
+package com.kalita.drone;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
