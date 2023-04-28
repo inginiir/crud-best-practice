@@ -1,6 +1,7 @@
 package com.kalita.drone.controllers;
 
 import com.kalita.drone.controllers.dto.DroneDto;
+import com.kalita.drone.controllers.dto.DroneLightDto;
 import com.kalita.drone.controllers.dto.MedicationDto;
 import com.kalita.drone.services.DroneService;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,10 @@ public class DroneController {
     public void checkBattery() {
         log.info("Running scheduled task to check drone battery levels...");
 
-        List<DroneDto> drones = droneService.getAllDrones();
-        drones.forEach(droneDto -> {});
+        List<DroneLightDto> drones = droneService.getAllDrones();
+        drones.forEach(drone -> {
+
+        });
+        log.info("Checking drone battery levels finished");
     }
 }

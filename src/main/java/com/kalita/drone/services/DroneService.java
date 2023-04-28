@@ -1,6 +1,7 @@
 package com.kalita.drone.services;
 
 import com.kalita.drone.controllers.dto.DroneDto;
+import com.kalita.drone.controllers.dto.DroneLightDto;
 import com.kalita.drone.controllers.dto.MedicationDto;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface DroneService {
 
     List<DroneDto> getAvailableDrones();
 
-    List<DroneDto> getAllDrones();
+    List<DroneLightDto> getAllDrones();
 
     Integer checkBatteryLevel(Long id);
 }

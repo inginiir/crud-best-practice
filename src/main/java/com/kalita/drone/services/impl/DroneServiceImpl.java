@@ -1,6 +1,7 @@
 package com.kalita.drone.services.impl;
 
 import com.kalita.drone.controllers.dto.DroneDto;
+import com.kalita.drone.controllers.dto.DroneLightDto;
 import com.kalita.drone.controllers.dto.MedicationDto;
 import com.kalita.drone.services.DroneService;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class DroneServiceImpl implements DroneService {
     }
 
     @Override
-    public List<DroneDto> getAllDrones() {
+    public List<DroneLightDto> getAllDrones() {
         return null;
     }
 

@@ -21,7 +21,4 @@ public class Medication {
     @Pattern(regexp = "^[A-Z\\d_]+$", message = "{medication.code.constraints}")
     private String code;
     private String imageUrl;
-    @ManyToOne
-    @JoinColumn(name = "drone_id", referencedColumnName = "id", nullable = false)
-    private Drone drone;
 }

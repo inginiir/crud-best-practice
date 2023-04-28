@@ -28,7 +28,11 @@ public class Drone {
     @Range(min = 0, max = 100, message = "{drone.battery.invalid}")
     private Integer batteryCapacity;
     @Enumerated(EnumType.STRING)
-    private State drone_state;
-    @OneToMany(mappedBy = "drone", fetch = FetchType.EAGER)
+    private State droneState;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "drone_medication_id",
+            joinColumns = {@JoinColumn(name = "drone_id")},
+            inverseJoinColumns = {@JoinColumn(name = "medication_id")}
+    )
     private List<Medication> items;
 }
