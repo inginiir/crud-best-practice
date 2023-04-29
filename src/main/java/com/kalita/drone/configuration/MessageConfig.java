@@ -18,6 +18,8 @@ public class MessageConfig {
 
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        messageSource.setFallbackToSystemLocale(false);
         return messageSource;
     }
 
@@ -35,7 +37,8 @@ public class MessageConfig {
         MEDICATION_NOT_FOUND("medication.not.found"),
         DRONE_IS_FULL("drone.is.full"),
         DRONE_LOADED("drone.loaded"),
-        LOW_BATTERY("drone.low.battery");
+        LOW_BATTERY("drone.low.battery"),
+        UNAVAILABLE_STATUS("drone.status.unavailable");
 
         private final String value;
     }

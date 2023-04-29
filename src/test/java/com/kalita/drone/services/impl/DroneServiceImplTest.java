@@ -64,6 +64,7 @@ class DroneServiceImplTest {
         doReturn(Optional.of(medication3))
                 .when(medicationRepository).findById(3L);
         Drone drone = createTestDrone(1L);
+        drone.setDroneState(State.IDLE);
         doReturn(Optional.of(drone))
                 .when(droneRepository).findById(1L);
         doReturn("Drone {} loaded. Items loaded {}, items weight {}")
@@ -92,6 +93,7 @@ class DroneServiceImplTest {
                 .when(medicationRepository).findById(3L);
         Drone drone = createTestDrone(1L);
         drone.setWeightLimit(100L);
+        drone.setDroneState(State.IDLE);
         doReturn(Optional.of(drone))
                 .when(droneRepository).findById(1L);
         doReturn("Drone {} loaded. Items loaded {}, items weight {}")

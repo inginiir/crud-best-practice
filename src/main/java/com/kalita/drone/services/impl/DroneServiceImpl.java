@@ -9,6 +9,7 @@ import com.kalita.drone.controllers.mappers.MedicationMapper;
 import com.kalita.drone.entities.Drone;
 import com.kalita.drone.entities.Medication;
 import com.kalita.drone.entities.State;
+import com.kalita.drone.exceptions.DroneStatusException;
 import com.kalita.drone.exceptions.LowBatteryException;
 import com.kalita.drone.exceptions.NotFoundException;
 import com.kalita.drone.repositories.DroneRepository;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.stream.StreamSupport;
 
 import static com.kalita.drone.configuration.MessageConfig.Code.*;
+import static com.kalita.drone.entities.State.IDLE;
 
 @Slf4j
 @Service
@@ -42,7 +44,7 @@ public class DroneServiceImpl implements DroneService {
     @Transactional
     public Long registerDrone(DroneLightDto droneDto) {
         Drone drone = droneMapper.mapToEntity(droneDto);
-        drone.setDroneState(State.IDLE);
+        drone.setDroneState(IDLE);
         Drone savedDrone = droneRepository.save(drone);
         return savedDrone.getId();
     }
@@ -51,7 +53,7 @@ public class DroneServiceImpl implements DroneService {
     @Transactional
     public Long loadDrone(Long id, List<Long> items) {
         Drone drone = getDrone(id);
-        checkBatteryLevel(drone);
+        checkAvailability(drone);
         drone.setDroneState(State.LOADING);
         droneRepository.save(drone);
         List<Medication> medications = getMedications(items);
@@ -107,9 +109,11 @@ public class DroneServiceImpl implements DroneService {
         return countLoaded;
     }
 
-    private void checkBatteryLevel(Drone drone) {
+    private void checkAvailability(Drone drone) {
         if (drone.getBatteryCapacity() < 25) {
             throw new LowBatteryException(getMessage(LOW_BATTERY, drone.getId(), drone.getBatteryCapacity()));
+        } else if (!IDLE.equals(drone.getDroneState())) {
+            throw new DroneStatusException(getMessage(UNAVAILABLE_STATUS, drone.getId(), drone.getDroneState()));
         }
     }
 

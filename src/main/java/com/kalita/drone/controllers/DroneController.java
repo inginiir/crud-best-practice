@@ -4,11 +4,14 @@ import com.kalita.drone.configuration.MessageConfig;
 import com.kalita.drone.controllers.dto.DroneDto;
 import com.kalita.drone.controllers.dto.DroneLightDto;
 import com.kalita.drone.controllers.dto.MedicationDto;
+import com.kalita.drone.services.AuditService;
 import com.kalita.drone.services.DroneService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +23,16 @@ import static com.kalita.drone.configuration.MessageConfig.Code.DRONE_LOADED;
 
 @Slf4j
 @RestController
-@RequestMapping("/drone")
+@RequestMapping("/api/drone")
 @RequiredArgsConstructor
 public class DroneController {
 
     private final DroneService droneService;
     private final MessageSource messageSource;
+    private final AuditService auditService;
 
     @PostMapping("/register")
-    public ResponseEntity<Long> registerDrone(@RequestBody DroneLightDto drone) {
+    public ResponseEntity<Long> registerDrone(@Valid @RequestBody DroneLightDto drone) {
         Long id = droneService.registerDrone(drone);
         return ResponseEntity.ok(id);
     }
@@ -42,14 +46,16 @@ public class DroneController {
 
     @GetMapping("/check/{droneId}")
     public ResponseEntity<List<MedicationDto>> getLoadedItems(@PathVariable("droneId") Long droneId) {
-        List<MedicationDto> medicationDtoList = droneService.checkLoadedMedications(droneId);
-        return ResponseEntity.ok(medicationDtoList);
+        List<MedicationDto> medicationList = droneService.checkLoadedMedications(droneId);
+        return medicationList.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(medicationList)
+                : ResponseEntity.ok(medicationList);
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<DroneDto>> getAvailableDrones() {
         List<DroneDto> availableDrones = droneService.getAvailableDrones();
-        return ResponseEntity.ok(availableDrones);
+        return availableDrones.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(availableDrones)
+                : ResponseEntity.ok(availableDrones);
     }
 
     @GetMapping("/checkBattery/{droneId}")
@@ -58,14 +64,12 @@ public class DroneController {
         return ResponseEntity.ok(percentageLeft);
     }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void checkBattery() {
         log.info("Running scheduled task to check drone battery levels...");
-
         List<DroneLightDto> drones = droneService.getAllDrones();
-        drones.forEach(drone -> {
-
-        });
+        drones.forEach(drone -> auditService.logAuditEvent(String.format("Checking drone %s model %s. Battery level is %s",
+                drone.serialNumber(), drone.model(), drone.batteryCapacity())));
         log.info("Checking drone battery levels finished");
     }
 

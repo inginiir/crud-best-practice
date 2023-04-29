@@ -1,14 +1,14 @@
 insert into drones (id, serial_number, model, weight_limit, battery_capacity, drone_state)
 values (nextval('drone_id_generator'), 'DRONE001', 'LIGHTWEIGHT', 200, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE002', 'MIDDLEWEIGHT', 300, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE003', 'CRUISERWEIGHT', 400, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE004', 'HEAVYWEIGHT', 500, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE005', 'LIGHTWEIGHT', 200, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE006', 'MIDDLEWEIGHT', 300, 100, 'IDLE'),
+       (nextval('drone_id_generator'), 'DRONE002', 'MIDDLEWEIGHT', 300, 80, 'DELIVERING'),
+       (nextval('drone_id_generator'), 'DRONE003', 'CRUISERWEIGHT', 400, 65, 'LOADING'),
+       (nextval('drone_id_generator'), 'DRONE004', 'HEAVYWEIGHT', 500, 90, 'DELIVERING'),
+       (nextval('drone_id_generator'), 'DRONE005', 'LIGHTWEIGHT', 200, 10, 'IDLE'),
+       (nextval('drone_id_generator'), 'DRONE006', 'MIDDLEWEIGHT', 300, 30, 'RETURNING'),
        (nextval('drone_id_generator'), 'DRONE007', 'CRUISERWEIGHT', 400, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE008', 'HEAVYWEIGHT', 500, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE009', 'LIGHTWEIGHT', 200, 100, 'IDLE'),
-       (nextval('drone_id_generator'), 'DRONE010', 'MIDDLEWEIGHT', 300, 100, 'IDLE');
+       (nextval('drone_id_generator'), 'DRONE008', 'HEAVYWEIGHT', 500, 100, 'LOADED'),
+       (nextval('drone_id_generator'), 'DRONE009', 'LIGHTWEIGHT', 200, 15, 'DELIVERED'),
+       (nextval('drone_id_generator'), 'DRONE010', 'MIDDLEWEIGHT', 300, 99, 'IDLE');
 insert into medications (id, medication_name, weight, code, image_url)
 values (nextval('medication_id_generator'), 'Medication 1', 100, 'CODE1', './images/medication1.jpg'),
        (nextval('medication_id_generator'), 'Medication 2', 50, 'CODE2', './images/medication2.jpg'),
@@ -31,9 +31,9 @@ values (nextval('medication_id_generator'), 'Medication 1', 100, 'CODE1', './ima
        (nextval('medication_id_generator'), 'Medication 19', 75, 'CODE19', './images/medication19.jpg'),
        (nextval('medication_id_generator'), 'Medication 20', 200, 'CODE20', './images/medication20.jpg');
 insert into drone_medication_id (drone_id, medication_id)
-values ((select id from drones where serial_number = 'DRONE001'), (select id from medications where code = 'CODE2')),
-       ((select id from drones where serial_number = 'DRONE001'), (select id from medications where code = 'CODE3')),
-       ((select id from drones where serial_number = 'DRONE001'), (select id from medications where code = 'CODE8')),
+values ((select id from drones where serial_number = 'DRONE003'), (select id from medications where code = 'CODE2')),
+       ((select id from drones where serial_number = 'DRONE003'), (select id from medications where code = 'CODE3')),
+       ((select id from drones where serial_number = 'DRONE003'), (select id from medications where code = 'CODE8')),
        ((select id from drones where serial_number = 'DRONE002'), (select id from medications where code = 'CODE4')),
        ((select id from drones where serial_number = 'DRONE002'), (select id from medications where code = 'CODE7')),
        ((select id from drones where serial_number = 'DRONE004'), (select id from medications where code = 'CODE5')),
@@ -49,5 +49,5 @@ values ((select id from drones where serial_number = 'DRONE001'), (select id fro
        ((select id from drones where serial_number = 'DRONE008'), (select id from medications where code = 'CODE16')),
        ((select id from drones where serial_number = 'DRONE008'), (select id from medications where code = 'CODE17')),
        ((select id from drones where serial_number = 'DRONE008'), (select id from medications where code = 'CODE18')),
-       ((select id from drones where serial_number = 'DRONE010'), (select id from medications where code = 'CODE1')),
-       ((select id from drones where serial_number = 'DRONE010'), (select id from medications where code = 'CODE19'));
+       ((select id from drones where serial_number = 'DRONE009'), (select id from medications where code = 'CODE1')),
+       ((select id from drones where serial_number = 'DRONE009'), (select id from medications where code = 'CODE19'));
