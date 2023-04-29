@@ -1,5 +1,17 @@
 ## Drones
 
+<br>There are several ways to start service.
+Run following scripts:
+<br>Windows:
+<br>run.bat *
+<br>run-local.bat **
+<br>Linux/MacOs:
+<br>sh run.sh *
+<br>sh run-local.sh **
+
+<br>* Docker must be installed
+<br>** Maven 3.8.3 and Java 17 must be installed
+
 [[_TOC_]]
 
 ---

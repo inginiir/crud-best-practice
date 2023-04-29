@@ -64,7 +64,7 @@ public class DroneController {
         return ResponseEntity.ok(percentageLeft);
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 * * * *") // once an hour
     public void checkBattery() {
         log.info("Running scheduled task to check drone battery levels...");
         List<DroneLightDto> drones = droneService.getAllDrones();
