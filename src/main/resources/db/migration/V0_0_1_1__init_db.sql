@@ -25,5 +25,5 @@ CREATE TABLE drone_medication_id
     CONSTRAINT medication_drone_fk FOREIGN KEY (medication_id) REFERENCES medications (id)
 );
 
-create sequence drone_id_generator start 1;
-create sequence medication_id_generator start 1;
+CREATE SEQUENCE drone_id_generator START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE medication_id_generator START WITH 1 INCREMENT BY 1;

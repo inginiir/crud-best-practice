@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DroneService {
 
-    Long registerDrone(DroneDto drone);
+    Long registerDrone(DroneLightDto drone);
 
     Long loadDrone(Long id, List<Long> items);
 

@@ -1,5 +1,7 @@
 package com.kalita.drone.configuration;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,5 +26,17 @@ public class MessageConfig {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum Code {
+        DRONE_NOT_FOUND("drone.not.found"),
+        MEDICATION_NOT_FOUND("medication.not.found"),
+        DRONE_IS_FULL("drone.is.full"),
+        DRONE_LOADED("drone.loaded"),
+        LOW_BATTERY("drone.low.battery");
+
+        private final String value;
     }
 }
